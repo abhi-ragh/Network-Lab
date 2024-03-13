@@ -17,10 +17,6 @@ void main() {
 
     // Change: Use SOCK_DGRAM for UDP communication
     SP1 = socket(AF_INET, SOCK_DGRAM, 0);
-    if (SP1 < 0) {
-        perror("socket");
-        exit(1);
-    }
 
     while (1) {
         printf("Enter The Message: ");
@@ -28,19 +24,10 @@ void main() {
 
         // Change: Use sendto for UDP, specifying server address
         K = sendto(SP1, buf, 100, 0, (struct sockaddr*) &server, len);
-        if (K < 0) {
-            perror("sendto");
-            exit(1);
-        }
 
         // Change: Use recvfrom for UDP, waiting for server response
         K = recvfrom(SP1, buf, 100, 0, (struct sockaddr*) &server, &len);
-        if (K < 0) {
-            perror("recvfrom");
-            exit(1);
-        }
-
+  
         printf("\nMessage from Server: %s\n", buf);
     }
 }
-
