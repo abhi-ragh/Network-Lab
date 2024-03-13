@@ -17,25 +17,14 @@ void main() {
 
     // Change: Use SOCK_DGRAM for UDP communication
     SP1 = socket(AF_INET, SOCK_DGRAM, 0);
-    if (SP1 < 0) {
-        perror("socket");
-        exit(1);
-    }
+
 
     // Change: Bind the socket to allow receiving messages
     K = bind(SP1, (struct sockaddr*) &server, sizeof(server));
-    if (K < 0) {
-        perror("bind");
-        exit(1);
-    }
+
 
     while (1) {
         K = recvfrom(SP1, buf, 100, 0, (struct sockaddr*) &client, &len);
-        if (K < 0) {
-            perror("recvfrom");
-            exit(1);
-        }
-
         printf("\nMessage From Client: %s\n", buf);
 
         printf("Enter Message to Send:");
@@ -43,10 +32,6 @@ void main() {
 
         // Change: Use sendto for UDP, specifying client address
         K = sendto(SP1, buf, 100, 0, (struct sockaddr*) &client, len);
-        if (K < 0) {
-            perror("sendto");
-            exit(1);
-        }
+
     }
 }
-
